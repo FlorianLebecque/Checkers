@@ -25,7 +25,148 @@ class Pieces{
         }
     }
 
+    GetPath(){
+        let neighbour = this.GetNeighbourPos([this.i,this.j],this.dir());
 
+        let path = [];
+
+        for(let i = 0 ; i < neighbour.length;i++){
+
+            if(this.CheckPosition(neighbour[i]) === 0){ //simple path
+                path.push(new Path([this.i,this.j],neighbour[i]));
+
+            }else if(this.CheckPosition(neighbour[i]) === 2){  //posible jump
+                let jump = this.FindJumps([this.i,this.j],[]);
+                if(jump.length>0){
+
+                    for(let i = 0; i < jump.length;i++){
+                        path.push(jump[i]);
+                    }
+
+                }
+            }
+        }
+
+        return path;
+    }
+
+    /**
+     * Return a path to a jump
+     */
+    FindJumps(position,checkedposition){
+
+        if(this.In_array(position,checkedposition)){
+            return [];
+        }
+
+        checkedposition.push(position);
+        let neighbour = this.GetAllNeighbour();
+        let jump = [];
+        for(let i = 0; i < neighbour.length;i++){
+            let np = neighbour[i];
+
+            //test if a neighnour is in the checked list
+            
+                if(this.CheckPosition(np) === 2){    //check if it's a pieces
+                    let n_pieces = this.parent.board[np[0]][np[1]];
+                    let di = n_pieces.i - position[0];
+                    let dj = n_pieces.j - position[1];
+                    let ni = n_pieces.i+di;
+                    let nj = n_pieces.j+dj;
+    
+                    if((this.In_array([ni,nj],checkedposition)===false)&&(this.CheckPosition([ni,nj])===0)){
+                        let npath = new Path(position,[ni,nj]);
+                        npath.middle = [n_pieces.i,n_pieces.j];
+                        npath.child = this.FindJumps([ni,nj],checkedposition);
+                        jump.push(npath);
+                    }
+    
+                }
+            
+
+        }
+
+        return jump;
+    }
+
+    In_array(needle,haystack){
+        for(let i = 0; i < haystack.length;i++){
+            if((needle[0] === haystack[i][0])&&(needle[1]===haystack[i][1])){
+                return true;
+                
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 
+     * @param {Position (array [i,j]) of a pieces in the board} position 
+     * @returns 0 if free, 1 is same team, 2 if opposed team, -1 out of board
+     */
+    CheckPosition(position){
+        if((position[0] >=0)&&(position[0]<8)&&(position[1]>=0)&&(position[1]<8)){
+            if(this.parent.board[position[0]][position[1]]===null){
+                return 0;
+            }else{
+                if(this.parent.board[position[0]][position[1]].team === this.team){
+                    return 1;
+                }else{
+                    return 2;
+                }
+            }
+        }
+        return -1
+    }
+
+    /**
+     * @returns Position of a possible neightbour on the left or right
+     * trans : left (-1) or right (+1) 
+     */
+     GetPossibleNeighbourPos(position,trans,dir){
+        if((position[0]+trans >= 0)&&(position[0]+trans<8)){
+            return [position[0]+trans,position[1] + dir];
+        }
+        return null;
+    }
+    /**
+     * @returns Position of all the possible neightbour (array)
+     */
+    GetNeighbourPos(position,dir){
+        let neighbourPos = [];
+        let left    = this.GetPossibleNeighbourPos(position,-1,dir);
+        let right   = this.GetPossibleNeighbourPos(position,1,dir);
+        if(left){
+            neighbourPos.push(left);
+        }
+        if(right){
+            neighbourPos.push(right);
+        }
+        return neighbourPos;
+    }
+
+    GetAllNeighbour(position){
+        let neighbour_1 = this.GetNeighbourPos(position,1);
+        let neighbour_2 = this.GetNeighbourPos(position,-1);
+        let neighbour = [];
+        for(let i = 0 ; i < neighbour_1.length; i++){
+            neighbour.push(neighbour_1[i]);
+        }
+        for(let i = 0 ; i < neighbour_2.length; i++){
+            neighbour.push(neighbour_2[i]);
+        }
+
+        return neighbour;
+    }
+
+    GetLastPosition(move){
+        if(move.child !== null){
+            return this.GetLastPosition(move.child);
+        }else{
+            return move.to;
+        }
+    }
 
     CheckHover(){
         let radius = this.width*0.4;
