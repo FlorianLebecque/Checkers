@@ -26,27 +26,24 @@ class Pieces{
     }
 
     GetPath(){
-        let neighbour = this.GetNeighbourPos([this.i,this.j],this.dir());
+        let path = this.FindSimplePath();
 
+        return path.concat(this.FindJumps([this.i,this.j],[]));
+    }
+
+
+    FindSimplePath(){
         let path = [];
-
+        let neighbour = this.GetAllNeighbour([this.i,this.j]);
         for(let i = 0 ; i < neighbour.length;i++){
 
             if(this.CheckPosition(neighbour[i]) === 0){ //simple path
-                path.push(new Path([this.i,this.j],neighbour[i]));
-
-            }else if(this.CheckPosition(neighbour[i]) === 2){  //posible jump
-                let jump = this.FindJumps([this.i,this.j],[]);
-                if(jump.length>0){
-
-                    for(let i = 0; i < jump.length;i++){
-                        path.push(jump[i]);
-                    }
-
+                //must be in front
+                if(neighbour[i][1]-this.j === this.dir()){
+                    path.push(new Path([this.i,this.j],neighbour[i]));
                 }
             }
         }
-
         return path;
     }
 
