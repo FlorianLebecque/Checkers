@@ -5,6 +5,7 @@ class Checker{
         this.rows = 8;
         this.grid_width = this.width / this.rows;
 
+
         this.board = [];
 
     }
@@ -42,20 +43,20 @@ class Checker{
         piece.j = CurrentMove.to[1];
 
 
+        piece.queen = this.selectedPiece.queen;
+        if(!piece.queen){
+            piece.queen = (piece.j === 0 && piece.dir() === -1) || (piece.j === 7 && piece.dir() === 1);
+        }
+        
+
         this.board[CurrentMove.origin[0]][CurrentMove.origin[1]] = null;
         this.board[CurrentMove.to[0]][CurrentMove.to[1]] = piece;
         this.selectedPiece = piece;
 
-
-        if(CurrentMove.hasOwnProperty("middle_piece")){
-            this.board[CurrentMove.middle_piece[0]][CurrentMove.middle_piece[1]] = null;
-        }
-
-        if(CurrentMove.child.length>0){
-            this.Play(CurrentMove.child);
-        }
-
         
+        if(CurrentMove.middle){
+            this.board[CurrentMove.middle[0]][CurrentMove.middle[1]] = null;
+        }
 
     }
 
@@ -63,28 +64,32 @@ class Checker{
         //find mouse position
         let mi = Math.floor(mouseX / this.grid_width);
         let mj = Math.floor(mouseY / this.grid_width);
+        let target = [mi,mj];
 
-        let CurrentMove = this.FindMove([this.selectedPiece.i,this.selectedPiece.j],[mi,mj]);
-        
-        if(CurrentMove){
-            this.Play(CurrentMove);
+        let PathArray = this.FindMove(target);
+
+        if(PathArray){
+            for(let i = 0 ; i < PathArray.length;i++){
+                this.Play(PathArray[i]);
+            }
         }
-            
-        
-        
+
+        return PathArray;
     }
 
-    FindMove(position,target){
+    FindMove(target){
 
         let moves = this.selectedPiece.GetPath();
 
         for(let i = 0; i < moves.length;i++){
-            if(moves[i].to[0] === target[0]&&(moves[i].to[1]===target[1])){
-                return moves[i];
+            let pathArray = moves[i].GetPathToTarget(target);
+
+            if(pathArray){
+                return pathArray;
             }
         }
-        return null;
 
+        return null;
     }
 
     SelectPieces(){
@@ -101,7 +106,6 @@ class Checker{
                         if(this.board[i][j].selected === false){
                             this.board[i][j].selected = true;
                             this.selectedPiece = this.board[i][j];
-                            this.GetMove(this.board[i][j]);
                             return this.board[i][j];
                         }
                     }
@@ -123,31 +127,10 @@ class Checker{
         }
     }
 
-    GetMove(piece){
-
-        let moves = [];
-
-        if(piece){
-            let dir = 0;
-            switch(this.selectedPiece.team){
-                case 0:
-                    dir = -1
-                    break;
-                case 1:
-                    dir = 1
-                    break;
-            }
-
-
-            this.moves = this.selectedPiece.GetPath()//this.GetMoves([],piece.team,[piece.i,piece.j],dir,false);
-            console.log(this.moves);
-        }
-    }
-
     DisplayMove(){
         let moves = [];
         if((this.selectedPiece)&&(this.selectedPiece.selected === true)){
-            moves = this.moves;
+            moves = this.selectedPiece.GetPath();
         }
 
         for(let i = 0 ; i < moves.length;i++){
