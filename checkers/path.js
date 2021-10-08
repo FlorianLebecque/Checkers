@@ -29,8 +29,44 @@ class Path{
 
     }
 
+    length(){
+        let count = this.child.length;
 
-    AddChild(nPath){
-        this.child.push(nPath);
+        if(this.middle !== null){
+            count+=1;
+        }
+
+        for(let i = 0; i < this.child.length;i++){
+
+            count += this.child[i].length();
+        }
+        return count;
     }
+
+    /**
+     * Keep only the longest path
+     */
+    Filter(){
+        let KeepPath = [];
+        let Max = 0;
+
+       
+        for(let i = 0; i < this.child.length;i++){
+            this.child[i].Filter();
+            let score = this.child[i].length();
+
+            if(score > Max){
+                KeepPath = [this.child[i]];
+                Max = score;
+            }else if (score === Max){
+                KeepPath.push(this.child[i]);
+            }
+
+            
+        }
+
+        this.child = KeepPath;
+
+    }
+
 }

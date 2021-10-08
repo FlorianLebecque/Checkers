@@ -27,8 +27,28 @@ class Pieces{
 
     GetPath(){
         let path = this.FindSimplePath();
+        path = path.concat(this.FindJumps([this.i,this.j],[]));
 
-        return path.concat(this.FindJumps([this.i,this.j],[]));
+        for(let i = 0; i < path.length;i++){
+            path[i].Filter();
+        }
+
+        let KeepPath = [];
+        let Max = 0;
+        for(let i = 0; i < path.length;i++){
+            let score = path[i].length();
+
+            if(score > Max){
+                KeepPath = [path[i]];
+                Max = score;
+            }else if (score === Max){
+                KeepPath.push(path[i]);
+            }
+
+            
+        }
+
+        return KeepPath;
     }
 
 
