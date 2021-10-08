@@ -60,7 +60,7 @@ class Pieces{
         }
 
         checkedposition.push(position);
-        let neighbour = this.GetAllNeighbour();
+        let neighbour = this.GetAllNeighbour(position);
         let jump = [];
         for(let i = 0; i < neighbour.length;i++){
             let np = neighbour[i];
@@ -77,7 +77,7 @@ class Pieces{
                     if((this.In_array([ni,nj],checkedposition)===false)&&(this.CheckPosition([ni,nj])===0)){
                         let npath = new Path(position,[ni,nj]);
                         npath.middle = [n_pieces.i,n_pieces.j];
-                        npath.child = this.FindJumps([ni,nj],checkedposition);
+                        npath.child = this.FindJumps([ni,nj],[].concat(checkedposition));
                         jump.push(npath);
                     }
     

@@ -6,6 +6,10 @@ class Path{
         this.middle = null;
     }
 
+    toString(){
+        return this.origin + " -> " + this.to + " | " + this.child.length+" | "+this.middle;
+    }
+
     Display(grid_width){
         rectMode(CORNER);
 
