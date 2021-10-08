@@ -35,11 +35,19 @@ function draw() {
 
 function mouseClicked() {
     
-    checker.SelectPieces()
+    
 
     if(checker.selectedPiece){
-        checker.PlayMove();
+        if(checker.selectedPiece.selected){
+            checker.PlayMove();
+            checker.selectedPiece.selected = false;
+        }else{
+            checker.SelectPieces()
+        }
+        
+    }else{
+        checker.SelectPieces()
     }
 
-
+    
 }
