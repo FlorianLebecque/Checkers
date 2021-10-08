@@ -69,4 +69,29 @@ class Path{
 
     }
 
+    GetPathToTarget(target){
+
+        let pathWay = []
+
+        for(let i = 0; i < this.child.length;i++){
+
+            let test = this.child[i].GetPathToTarget(target);
+
+            if(test  !== null){
+                pathWay.push(this);
+                pathWay = pathWay.concat(test);
+                return pathWay;
+            }
+
+        }
+
+        if((this.to[0]  === target[0])&&(this.to[1]===target[1])){
+            pathWay.push(this);
+            return pathWay;
+        }else{
+            return null;
+        }
+
+    }
+
 }
