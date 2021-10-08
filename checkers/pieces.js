@@ -7,6 +7,7 @@ class Pieces{
         this.selected = false;
         this.i = i_;
         this.j = j_; 
+        this.queen = false;
     }
 
     x(){
@@ -59,7 +60,7 @@ class Pieces{
 
             if(this.CheckPosition(neighbour[i]) === 0){ //simple path
                 //must be in front
-                if(neighbour[i][1]-this.j === this.dir()){
+                if((neighbour[i][1]-this.j === this.dir())||(this.queen)){
                     path.push(new Path([this.i,this.j],neighbour[i]));
                 }
             }
@@ -215,6 +216,15 @@ class Pieces{
         rectMode(RADIUS);
         rect(this.x(),this.y(),this.width*0.4,this.width*0.4,30)
 
+        if(this.queen){
+            
+            fill(255);
+            textAlign(CENTER,CENTER);
+            textSize(this.width*0.6);
+            text('♕',this.x(),this.y());
+        
+        }
+        rectMode(RADIUS);
         if(this.hover){
             fill(0,0,0,100);
             rect(this.x(),this.y(),this.width*0.4,this.width*0.4,30)
