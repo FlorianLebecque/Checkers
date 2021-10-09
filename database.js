@@ -1,6 +1,9 @@
 class Database {
     constructor() {
         this.gun = Gun(['http://localhost:8765/gun']);
+    }
+
+    init() {
         this.gun.on('auth', (v) => this.onLogin(v));
         this.user = this.gun.user().recall({sessionStorage: true});
     }
@@ -44,8 +47,8 @@ class Database {
     }
 }
 
-
+window.db = new Database();
 
 window.addEventListener('load', ()=>{
-    window.db = new Database();
+    db.init();
 });
