@@ -10,13 +10,14 @@ body {
 header {
     margin-bottom: 1em;
 
-    background: #0af;
 }
 
 nav {
     display: grid;
     grid-template-columns: minmax(auto, min-content) auto minmax(auto, min-content);
     grid-template-areas: 'title gap login';
+    background: #0af;
+    margin-bottom: 1em;
 }
 nav a {
     display: flex;
@@ -50,6 +51,10 @@ main {
     grid-column: 2/-1
 }
 
+#messages {
+    margin: auto;
+    max-width: max-content;
+}
 .message {
     border: 2px solid;
     border-radius: 5px;
