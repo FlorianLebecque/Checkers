@@ -39,6 +39,4 @@ class Messages{
     }
 }
 
-window.addEventListener('load', ()=>{
-    window.msg = new Messages();
-});
+window.msg = new Messages();
