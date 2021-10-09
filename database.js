@@ -1,5 +1,6 @@
 class Database {
     constructor() {
+        this.on_login = [];
         this.gun = Gun(['http://localhost:8765/gun']);
     }
 
@@ -28,6 +29,10 @@ class Database {
 
             window.location.reload();
         }, {once: true});
+
+        for (let i = this.on_login.length-1; i>=0; i--) {
+            this.on_login[i](ack);
+        }
     }
 
     sign_up(username, password, cb) {
