@@ -5,7 +5,8 @@ class Database {
 
     init() {
         this.gun.on('auth', (v) => this.onLogin(v));
-        this.user = this.gun.user().recall({sessionStorage: true});
+        this.user = this.gun.user();
+        this.user.recall({sessionStorage: true});
     }
 
     onLogin(ack) {
