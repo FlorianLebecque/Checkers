@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkers</title>
+    <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="title">Checkers</a>
+            <a href="#login" class="login">Login/Register</a>
+        </nav>
+    </header>
+    <main>
+        <div id="messages"></div>
+
+        <form id="login-form">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username"/>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password"/>
+            <input type="button" value="Register" id="sign-up"/>
+            <input type="submit" value="Login" class="form__submit" />
+            <p id="login-success" class="hidden"></p>
+        </form>
+
+        <h2>Users</h2>
+        <ul id="users-list">
+        </ul>
+
+        <section id="conversations">
+            <h2>Messages</h2>
+            <article id="with-{{pub}}">
+                <h3>{{alias}} {{pub[:5]}}</h3>
+                <div class="conversation">
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him</p>
+                </div>
+                <form>
+                    <input type="text" name="message"/>
+                    <input type="submit" value="Send"/>
+                </form>
+            </article>
+            <article id="with-{{pub2}}">
+                <h3>{{alias}} {{pub[:5]}}</h3>
+                <div class="conversation">
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him</p>
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him</p>
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him</p>
+                    <p class="mine">Message by me</p>
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him</p>
+                    <p class="mine">Message by me but really extra long and spicy because I want to see if it overflows or not and that's what I'm interested about</p>
+                    <p class="other">Message by Him</p>
+                    <p class="other">Message by Him</p>
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him but really extra long and spicy because I want to see if it overflows or not and that's what I'm interested about</p>
+                    <p class="mine">Message by me</p>
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him</p>
+                    <p class="other">Message by Him</p>
+                    <p class="mine">Message by me</p>
+                    <p class="mine">Message by me</p>
+                    <p class="mine">Message by me</p>
+                    <p class="other">Message by Him</p>
+                    <p class="other">Message by Him</p>
+                    <p class="other">Message by Him</p>
+                </div>
+                <form>
+                    <input type="text" name="message"/>
+                    <input type="submit" value="Send"/>
+                </form>
+            </article>
+        </section>
+
+    </main>
+    <footer></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/gun/lib/webrtc.js"></script -->
+    <script src="database.js"></script>
+    <script src="messages.js"></script>
+    <script src="users/login.js"></script>
+    <script src="users/conversations.js"></script>
+    <script src="users/users-list.js"></script>
+</body>
+</html>
