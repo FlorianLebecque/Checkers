@@ -107,10 +107,10 @@ class Conversation {
         if (!p) {
 
             p = document.createElement('p');
-            p.classList.add(whom);
             this.messages.set(id, p);
 
         }
+        p.className = whom;
         p.dataset.when = msg.when;
         p.textContent = msg.content;
 
