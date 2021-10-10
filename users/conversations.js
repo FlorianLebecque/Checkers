@@ -130,6 +130,7 @@ class Conversation {
             // received the last message of the conversation, insert at the end of message_list
             this.message_list.appendChild(p);
         }
+        p.scrollIntoView();
     }
 
     remove() {
