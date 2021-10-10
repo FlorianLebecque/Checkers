@@ -95,11 +95,15 @@ main {
 #conversations form {
     width: max-content;
 }
+#conversations h3 {
+    margin: 0;
+}
 .conversation {
     max-height: 10rem;
     overflow-y: scroll;
     display: grid;
     grid-template-columns: minmax(2rem,1fr) auto 2rem;
+    background-color: #eee;
 }
 .conversation p {
     margin: .25rem;
