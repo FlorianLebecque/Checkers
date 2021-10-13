@@ -5,14 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkers</title>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
-    
-    <script src="checkers/checker.js"></script>
-    <script src="checkers/pieces.js"></script>
-    <script src="checkers/path.js"></script>
-
-    <script src="main.js"></script>
-
+    <link rel="stylesheet" href="main.css" />
 </head>
 <style>
     body{
@@ -25,6 +18,50 @@
     }
 </style>
 <body>
-    <div id="gameArea"></div>
+
+   
+
+    <header>
+        <nav>
+            <a href="#" class="title">Checkers</a>
+            <a href="#login" class="login">Login/Register</a>
+        </nav>
+        <div id="messages"></div>
+    </header>
+    <main>
+
+        <form id="login-form">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username"/>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password"/>
+            <input type="button" value="Register" id="sign-up"/>
+            <input type="submit" value="Login" class="form__submit" />
+            <p id="login-success" class="hidden"></p>
+        </form>
+
+        <section>
+            <h2>Users</h2>
+            <ul id="users-list">
+            </ul>
+        </section>
+
+        <section id="conversations">
+            <h2>Conversations</h2>
+        </section>
+
+        <div id="gameArea"></div>
+
+    </main>
+    <footer></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/gun/lib/webrtc.js"></script -->
+    <script src="database.js"></script>
+    <script src="messages.js"></script>
+    <script src="users/login.js"></script>
+    <script src="users/conversations.js"></script>
+    <script src="users/users-list.js"></script>
 </body>
 </html>

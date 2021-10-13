@@ -34,6 +34,8 @@ class Pieces{
             path[i].Filter();
         }
 
+        
+
         let KeepPath = [];
         let Max = 0;
         for(let i = 0; i < path.length;i++){
@@ -117,7 +119,6 @@ class Pieces{
         return false;
     }
 
-
     /**
      * 
      * @param {Position (array [i,j]) of a pieces in the board} position 
@@ -148,6 +149,7 @@ class Pieces{
         }
         return null;
     }
+
     /**
      * @returns Position of all the possible neightbour (array)
      */
