@@ -26,3 +26,13 @@ function GetGameList() {
 }
 
 window.addEventListener('load', ()=>{GetGameList()});
+
+function CreateGame(player_1_key){
+    checker = new checker(db.user.is.pub,player_1_key);
+    checker.Save();
+}
+
+
+
+
+//db.user.get('conversations').get(this.with_pub).map().on((m, i) => this.receiveMessage(m, i));

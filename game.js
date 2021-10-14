@@ -2,7 +2,9 @@ let color_background;
 let grid_1;
 let grid_2;
 
-let checker = new Checker(db.user.is.pub,"empty");
+let checker = {
+    Initialized : false
+};
 
 function setup() {
     let canvas = createCanvas(800, 800);
@@ -14,23 +16,24 @@ function setup() {
 
    //frameRate(5);
 
-    checker.Initialize();
+    
 
 }
   
 function draw() {
     background(color_background);
-    checker.Display();
+
+    if(checker){
 
 
-    /*
-    stroke(0)
-    strokeWeight(5);
-    point(mouseX,mouseY);
-
-    noStroke();
-    text(mouseX + "-" +mouseY,mouseX,mouseY);
-*/
+        if(checker.Initialized){
+            checker.Display();
+        }else{
+            if(checker.hasOwnProperty("Initialize")){
+                checker.Initialize();
+            }
+        }
+    }
 }
 
 function mouseClicked() {

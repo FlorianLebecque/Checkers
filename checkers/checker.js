@@ -4,20 +4,18 @@ class Checker{
         this.height = this.width = 800;
         this.rows = 8;
         this.grid_width = this.width / this.rows;
-
-
         this.board = [];
 
-        this.user    = [pub_key1,pub_key2];
-        this.current = pub_key1;
-        this.move    = []
-        this.id      = crypto.randomUUID();
+        this.user     = [pub_key1,pub_key2];
+        this.current  = pub_key1;
+        this.move     = []
+        this.id       = crypto.randomUUID();
         this.is_ended = false;
     }
 
 
     Initialize(){
-
+        this.Initialized = true;
         for(let i = 0; i < this.rows;i++){
             this.board[i] = [];
             for(let j = 0; j < this.rows;j++){
@@ -184,11 +182,5 @@ class Checker{
         db.gun.get('gamelist').get(this.id).put(game);
         db.user.get('gamelist').get(this.id).put(game);
     }
-
-    Join(){
-
-    }
-
-
 
 }
