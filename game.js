@@ -2,8 +2,35 @@ let color_background;
 let grid_1;
 let grid_2;
 
-let checker = {
-    Initialized : false
+
+let gameId = getUrlVars()["p"]
+
+
+function load(){
+    db.gun.get("gamelist").get(gameId).once(game=>{
+
+        if(!checker){
+            let game_checker = JSON.parse(game.checker)
+            checker = Checker.Recreate(game_checker);
+        }else{
+            if(!checker.selectedPiece){
+                let game_checker = JSON.parse(game.checker)
+                checker = Checker.Recreate(game_checker);
+            }
+        }
+
+        
+        
+    });
+}   
+load()
+setInterval(load,1000)
+
+
+
+var checker = {
+    Initialized  : false,
+    dummy        : true
 };
 
 function setup() {
@@ -14,22 +41,17 @@ function setup() {
     grid_1 = color_background;
     grid_2 = color(220);
 
-   //frameRate(5);
-
-    
-
 }
   
 function draw() {
     background(color_background);
 
     if(checker){
-
-
         if(checker.Initialized){
             checker.Display();
+
         }else{
-            if(checker.hasOwnProperty("Initialize")){
+            if(!checker.hasOwnProperty("dummy")){
                 checker.Initialize();
             }
         }
@@ -39,10 +61,10 @@ function draw() {
 function mouseClicked() {
     
     if(checker.current  !=  db.user.is.pub){
+
         if(checker.selectedPiece){
             if(checker.selectedPiece.selected){
                 checker.PlayMove();
-                checker.selectedPiece.selected = false;
             }else{
                 checker.SelectPieces()
             }
@@ -50,6 +72,15 @@ function mouseClicked() {
         }else{
             checker.SelectPieces()
         }
+        
     }
 
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
 }

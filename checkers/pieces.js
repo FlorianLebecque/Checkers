@@ -1,6 +1,5 @@
 class Pieces{
-    constructor(parent,int_team,width,i_,j_){
-        this.parent = parent;
+    constructor(int_team,width,i_,j_){
         this.team = int_team;
         this.width = width;
         this.hover = false;
@@ -17,18 +16,18 @@ class Pieces{
         return this.j*this.width+(this.width/2);
     }
 
-    dir(){
+    dir(users){
         switch(this.team){
-            case 0:
-                return -1;
-            case 1:
+            case users[0]:
                 return 1;
+            case users[1]:
+                return -1;
         }
     }
 
-    GetPath(){
-        let path = this.FindSimplePath();
-        path = path.concat(this.FindJumps([this.i,this.j],[]));
+    GetPath(board,users){
+        let path = this.FindSimplePath(board,users);
+        path = path.concat(this.FindJumps(board,[this.i,this.j],[]));
 
         for(let i = 0; i < path.length;i++){
             path[i].Filter();
@@ -55,14 +54,14 @@ class Pieces{
     }
 
 
-    FindSimplePath(){
+    FindSimplePath(board,users){
         let path = [];
         let neighbour = this.GetAllNeighbour([this.i,this.j]);
         for(let i = 0 ; i < neighbour.length;i++){
 
-            if(this.CheckPosition(neighbour[i]) === 0){ //simple path
+            if(this.CheckPosition(board,neighbour[i]) === 0){ //simple path
                 //must be in front
-                if((neighbour[i][1]-this.j === this.dir())||(this.queen)){
+                if((neighbour[i][1]-this.j === this.dir(users))||(this.queen)){
                     path.push(new Path([this.i,this.j],neighbour[i]));
                 }
             }
@@ -73,7 +72,7 @@ class Pieces{
     /**
      * Return a path to a jump
      */
-    FindJumps(position,checkedposition){
+    FindJumps(board,position,checkedposition){
 
         if(this.In_array(position,checkedposition)){
             return [];
@@ -87,17 +86,17 @@ class Pieces{
 
             //test if a neighnour is in the checked list
             
-                if(this.CheckPosition(np) === 2){    //check if it's a pieces
-                    let n_pieces = this.parent.board[np[0]][np[1]];
+                if(this.CheckPosition(board,np) === 2){    //check if it's a pieces
+                    let n_pieces = board[np[0]][np[1]];
                     let di = n_pieces.i - position[0];
                     let dj = n_pieces.j - position[1];
                     let ni = n_pieces.i+di;
                     let nj = n_pieces.j+dj;
     
-                    if((this.In_array([ni,nj],checkedposition)===false)&&(this.CheckPosition([ni,nj])===0)){
+                    if((this.In_array([ni,nj],checkedposition)===false)&&(this.CheckPosition(board,[ni,nj])===0)){
                         let npath = new Path(position,[ni,nj]);
                         npath.middle = [n_pieces.i,n_pieces.j];
-                        npath.child = this.FindJumps([ni,nj],[].concat(checkedposition));
+                        npath.child = this.FindJumps(board,[ni,nj],[].concat(checkedposition));
                         jump.push(npath);
                     }
     
@@ -124,12 +123,12 @@ class Pieces{
      * @param {Position (array [i,j]) of a pieces in the board} position 
      * @returns 0 if free, 1 is same team, 2 if opposed team, -1 out of board
      */
-    CheckPosition(position){
+    CheckPosition(board,position){
         if((position[0] >=0)&&(position[0]<8)&&(position[1]>=0)&&(position[1]<8)){
-            if(this.parent.board[position[0]][position[1]]===null){
+            if(board[position[0]][position[1]]===null){
                 return 0;
             }else{
-                if(this.parent.board[position[0]][position[1]].team === this.team){
+                if(board[position[0]][position[1]].team === this.team){
                     return 1;
                 }else{
                     return 2;
@@ -203,14 +202,14 @@ class Pieces{
         return this.hover;
     }
 
-    Display(){
+    Display(users){
 
         this.CheckHover();
         switch(this.team){
-            case 0:
+            case users[0]:
                 fill(210, 179, 162);
                 break;
-            case 1:
+            case users[1]:
                 fill(199, 138, 140);
                 break;
         }     

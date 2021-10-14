@@ -6,13 +6,56 @@ class Checker{
         this.grid_width = this.width / this.rows;
         this.board = [];
 
+        const uuid = (a) => a ? (a ^ Math.random() * 16 >> a / 4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid);
+
         this.user     = [pub_key1,pub_key2];
-        this.current  = pub_key1;
+        this.current  = pub_key2;
         this.move     = []
-        this.id       = crypto.randomUUID();
+        this.id       = uuid();
         this.is_ended = false;
+        this.Initialized = false;
     }
 
+    static Recreate(game){
+        let c = new Checker(game.user[0],game.user[1])
+
+        c.height = c.width = game.width;
+        c.rows = game.rows;
+        c.grid_width = c.width / c.rows;
+
+        let b = [];
+
+        game.board.forEach(r=>{
+            let nr = []
+
+            r.forEach(p =>{
+
+                if(p){
+                    let np = new Pieces(p.team,p.width,p.i,p.j);
+                    nr.push(np)
+                }else{
+                    nr.push(null)
+                }
+
+
+            });
+
+            b.push(nr);
+        });
+
+        c.board = b;
+
+        
+        c.user     = game.user
+        c.current  = game.current;
+        c.move     = game.move;
+        c.id       = game.id;//uuid();
+        c.is_ended = game.is_ended;
+        c.Initialized = game.Initialized;
+
+        return c
+    }
+    
 
     Initialize(){
         this.Initialized = true;
@@ -20,9 +63,9 @@ class Checker{
             this.board[i] = [];
             for(let j = 0; j < this.rows;j++){
                 if((j < 3)&&((i+j)%2==0)){
-                    this.board[i][j] = new Pieces(this,this.user[0],this.grid_width,i,j);
+                    this.board[i][j] = new Pieces(this.user[0],this.grid_width,i,j);
                 }else if((j>=5)&&((i+j)%2==0)){
-                    this.board[i][j] = new Pieces(this,this.user[1],this.grid_width,i,j);
+                    this.board[i][j] = new Pieces(this.user[1],this.grid_width,i,j);
                 }else{
                     this.board[i][j] = null;
                 }
@@ -34,7 +77,6 @@ class Checker{
     Play(CurrentMove){
 
         let piece = new Pieces(
-            this,
             this.selectedPiece.team,
             this.selectedPiece.width,
             this.selectedPiece.hover,
@@ -78,17 +120,18 @@ class Checker{
 
             this.current = db.user.is.pub;
             this.move.push(PathArray)
+            
             this.Save()
         }
 
 
-
+        this.selectedPiece = null;
         return PathArray;
     }
 
     FindMove(target){
 
-        let moves = this.selectedPiece.GetPath();
+        let moves = this.selectedPiece.GetPath(this.board,this.user);
 
         for(let i = 0; i < moves.length;i++){
             let pathArray = moves[i].GetPathToTarget(target);
@@ -140,7 +183,7 @@ class Checker{
     DisplayMove(){
         let moves = [];
         if((this.selectedPiece)&&(this.selectedPiece.selected === true)){
-            moves = this.selectedPiece.GetPath();
+            moves = this.selectedPiece.GetPath(this.board,this.user);
         }
 
         for(let i = 0 ; i < moves.length;i++){
@@ -162,7 +205,7 @@ class Checker{
                 rect(i*this.grid_width, j*this.grid_width, this.grid_width, this.grid_width);
 
                 if(this.board[i][j] !== null){
-                    this.board[i][j].Display();
+                    this.board[i][j].Display(this.user);
                 }
             }
         }
@@ -176,7 +219,9 @@ class Checker{
             checker : JSON.stringify(this),
             ended   : this.is_ended,
             user_0  : this.user[0],
-            user_1  : this.user[1]
+            user_1  : this.user[1],
+            id      : this.id,
+            current : this.current
         }
 
         db.gun.get('gamelist').get(this.id).put(game);
