@@ -9,8 +9,10 @@ class Checker{
         this.board = [];
 
         this.user    = [pub_key1,pub_key2];
-        this.current = 0;
+        this.current = pub_key1;
         this.move    = []
+        this.id      = crypto.randomUUID();
+        this.is_ended = false;
     }
 
 
@@ -76,8 +78,9 @@ class Checker{
                 this.Play(PathArray[i]);
             }
 
-            this.current = 1;
+            this.current = db.user.is.pub;
             this.move.push(PathArray)
+            this.Save()
         }
 
 
@@ -128,8 +131,6 @@ class Checker{
         return -1
     }
 
-
-
     GetLastPosition(move){
         if(move.child !== null){
             return this.GetLastPosition(move.child);
@@ -170,4 +171,24 @@ class Checker{
 
         this.DisplayMove();
     }
+
+    Save(){
+
+        let game = {
+            checker : JSON.stringify(this),
+            ended   : this.is_ended,
+            user_0  : this.user[0],
+            user_1  : this.user[1]
+        }
+
+        db.gun.get('gamelist').get(this.id).put(game);
+        db.user.get('gamelist').get(this.id).put(game);
+    }
+
+    Join(){
+
+    }
+
+
+
 }

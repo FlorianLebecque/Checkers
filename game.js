@@ -2,7 +2,7 @@ let color_background;
 let grid_1;
 let grid_2;
 
-let checker = new Checker();
+let checker = new Checker(db.user.is.pub,"empty");
 
 function setup() {
     let canvas = createCanvas(800, 800);
@@ -35,8 +35,7 @@ function draw() {
 
 function mouseClicked() {
     
-    
-    if(checker.current == 0){
+    if(checker.current  !=  db.user.is.pub){
         if(checker.selectedPiece){
             if(checker.selectedPiece.selected){
                 checker.PlayMove();
@@ -50,7 +49,4 @@ function mouseClicked() {
         }
     }
 
-    
-
-    
 }

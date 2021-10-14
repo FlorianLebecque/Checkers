@@ -1,7 +1,7 @@
 class Database {
     constructor() {
         this.on_login = [];
-        this.gun = Gun(['http://localhost:8765/gun']);
+        this.gun = Gun(['bachelay.eu:8764/gun']);
     }
 
     init() {
