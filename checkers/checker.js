@@ -1,6 +1,6 @@
 class Checker{
 
-    constructor(){
+    constructor(pub_key1,pub_key2){
         this.height = this.width = 800;
         this.rows = 8;
         this.grid_width = this.width / this.rows;
@@ -8,6 +8,9 @@ class Checker{
 
         this.board = [];
 
+        this.user    = [pub_key1,pub_key2];
+        this.current = 0;
+        this.move    = []
     }
 
 
@@ -17,9 +20,9 @@ class Checker{
             this.board[i] = [];
             for(let j = 0; j < this.rows;j++){
                 if((j < 3)&&((i+j)%2==0)){
-                    this.board[i][j] = new Pieces(this,1,this.grid_width,i,j);
+                    this.board[i][j] = new Pieces(this,this.user[0],this.grid_width,i,j);
                 }else if((j>=5)&&((i+j)%2==0)){
-                    this.board[i][j] = new Pieces(this,0,this.grid_width,i,j);
+                    this.board[i][j] = new Pieces(this,this.user[1],this.grid_width,i,j);
                 }else{
                     this.board[i][j] = null;
                 }
@@ -72,7 +75,12 @@ class Checker{
             for(let i = 0 ; i < PathArray.length;i++){
                 this.Play(PathArray[i]);
             }
+
+            this.current = 1;
+            this.move.push(PathArray)
         }
+
+
 
         return PathArray;
     }
@@ -104,9 +112,12 @@ class Checker{
                     if(this.board[i][j].CheckHover(i,j)){
   
                         if(this.board[i][j].selected === false){
-                            this.board[i][j].selected = true;
-                            this.selectedPiece = this.board[i][j];
-                            return this.board[i][j];
+
+                            if(this.board[i][j].team == db.user.is.pub){
+                                this.board[i][j].selected = true;
+                                this.selectedPiece = this.board[i][j];
+                                return this.board[i][j];
+                            }
                         }
                     }
                 }

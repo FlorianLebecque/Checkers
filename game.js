@@ -36,18 +36,21 @@ function draw() {
 function mouseClicked() {
     
     
-
-    if(checker.selectedPiece){
-        if(checker.selectedPiece.selected){
-            checker.PlayMove();
-            checker.selectedPiece.selected = false;
+    if(checker.current == 0){
+        if(checker.selectedPiece){
+            if(checker.selectedPiece.selected){
+                checker.PlayMove();
+                checker.selectedPiece.selected = false;
+            }else{
+                checker.SelectPieces()
+            }
+            
         }else{
             checker.SelectPieces()
         }
-        
-    }else{
-        checker.SelectPieces()
     }
+
+    
 
     
 }
