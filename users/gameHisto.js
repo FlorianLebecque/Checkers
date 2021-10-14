@@ -1,6 +1,6 @@
 function GetGameList() {
     let list_elem = document.querySelector('#GameList');
-
+    list_elem.innerHTML = "<h2>Game List</h2>"
     db.gun.get('gamelist').map().once(game=>{
         
 
@@ -58,7 +58,7 @@ function GetGameList() {
 
 window.addEventListener('load', ()=>{GetGameList()});
 
-setInterval(GetGameList,1000)
+//setInterval(GetGameList,1000)
 
 function CreateGame(player_1_key){
     let checker = new Checker(db.user.is.pub,player_1_key);
