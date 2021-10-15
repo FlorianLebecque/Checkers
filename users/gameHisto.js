@@ -22,12 +22,13 @@ function GetGameList() {
 
             let turn = ""
             let btn_txt = "Play"
-            if(game.current != db.user.is.pub){
-                turn = " | It's your turn"
+            if(game.current == db.user.is.pub){
+                turn = " | It's not your turn "
+                
             }else{
 
                 if((game.user_0 == db.user.is.pub)||(game.user_1==db.user.is.pub)){
-                    turn = " | It's not your turn "
+                    turn = " | It's your turn "
 
                 }else{
                     turn = " | spectate"
