@@ -32,6 +32,7 @@ class Checker{
 
                 if(p){
                     let np = new Pieces(p.team,p.width,p.i,p.j);
+                    np.queen = p.queen
                     nr.push(np)
                 }else{
                     nr.push(null)
