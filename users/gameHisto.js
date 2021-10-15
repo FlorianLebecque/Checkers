@@ -21,6 +21,7 @@ function GetGameList() {
 
 
             let turn = ""
+            let btn_txt = "Play"
             if(game.current != db.user.is.pub){
                 turn = " | It's your turn"
             }else{
@@ -30,6 +31,7 @@ function GetGameList() {
 
                 }else{
                     turn = " | spectate"
+                    btn_txt = "Spectate"
                 }
                 
             }
@@ -51,7 +53,7 @@ function GetGameList() {
             list_elem.appendChild(line);
             
             let discuss_btn = document.createElement('button');
-            discuss_btn.textContent = "Play";
+            discuss_btn.textContent = btn_txt;
             discuss_btn.addEventListener('click', (e) => {
                 document.location.href = "game.html?p="+game.id;
             });
