@@ -7,24 +7,26 @@ let gameId = getUrlVars()["p"]
 
 
 function load(){
-    db.gun.get("gamelist").get(gameId).once(game=>{
-
+    db.gun.get("gamelist").get(gameId).on(game=>{
+        
         if(!checker){
             let game_checker = JSON.parse(game.checker)
             checker = Checker.Recreate(game_checker);
         }else{
-            if(!checker.selectedPiece){
+            if(checker.current == db.user.is.pub){
+                let game_checker = JSON.parse(game.checker)
+                checker = Checker.Recreate(game_checker);
+            }
+            if(checker.dummy){
                 let game_checker = JSON.parse(game.checker)
                 checker = Checker.Recreate(game_checker);
             }
         }
 
-        
-        
     });
 }   
 load()
-setInterval(load,1000)
+//setInterval(load,500)
 
 
 

@@ -24,7 +24,14 @@ function GetGameList() {
             if(game.current != db.user.is.pub){
                 turn = " | It's your turn"
             }else{
-                turn = " | It's not your turn "
+
+                if((game.user_0 == db.user.is.pub)||(game.user_1==db.user.is.pub)){
+                    turn = " | It's not your turn "
+
+                }else{
+                    turn = " | spectate"
+                }
+                
             }
         
 

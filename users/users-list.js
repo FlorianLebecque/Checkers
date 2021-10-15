@@ -3,7 +3,7 @@ function generate_user_list() {
 
     db.gun.get('users').map().once(user=>{
 
-        if(user.pub != db.user.is.pub){
+        //if(user.pub != db.user.is.pub){
 
             let line = document.createElement('li');
             line.title = user.pub;
@@ -24,7 +24,7 @@ function generate_user_list() {
 
             list_elem.appendChild(play_btn);
             list_elem.appendChild(discuss_btn);
-        }
+        //}
     });
 }
 
