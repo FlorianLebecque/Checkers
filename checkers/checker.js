@@ -226,7 +226,7 @@ class Checker{
         }
 
         db.gun.get('gamelist').get(this.id).put(game);
-        //db.user.get('gamelist').get(this.id).put(game);
+        db.user.get('gamelist').get(this.id).put(game);
     }
 
 }
