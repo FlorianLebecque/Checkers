@@ -124,7 +124,7 @@ class Checker{
             this.Save()
         }
 
-
+        this.selectedPiece.selected = false
         this.selectedPiece = null;
         return PathArray;
     }
