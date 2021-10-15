@@ -90,7 +90,7 @@ class Checker{
 
         piece.queen = this.selectedPiece.queen;
         if(!piece.queen){
-            piece.queen = (piece.j === 0 && piece.dir() === -1) || (piece.j === 7 && piece.dir() === 1);
+            piece.queen = (piece.j === 0 && piece.dir(this.user) === -1) || (piece.j === 7 && piece.dir(this.user) === 1);
         }
         
 
