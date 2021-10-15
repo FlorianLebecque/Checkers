@@ -72,9 +72,21 @@ window.addEventListener('load', ()=>{GetGameList()});
 
 function CreateGame(player_1_key){
     let checker = new Checker(db.user.is.pub,player_1_key);
+
+    let game = {
+        checker : JSON.stringify(checker),
+        ended   : checker.is_ended,
+        user_0  : checker.user[0],
+        user_1  : checker.user[1],
+        id      : checker.id,
+        current : checker.current
+    }
+
+    db.gun.get('gamelist').get(checker.id).put(game,()=>{
+        document.location.href = "game.html?p="+checker.id;
+    });
+
     
-    checker.Save();
-    document.location.href = "game.html?p="+checker.id;
 }
 
 
