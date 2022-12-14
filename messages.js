@@ -13,11 +13,13 @@ class Messages{
 
     addMessage(msg_text, level, dismissable=true) {
         const index = this.current_index++;
-        let msg_element = document.createElement('p');
+        let msg_element = document.createElement('div');
         msg_element.appendChild(document.createTextNode(msg_text));
         msg_element.id = 'message-'+index;
-        msg_element.classList.add('message');
-        msg_element.classList.add(level);
+        //msg_element.classList.add('message');
+        msg_element.classList.add('alert');
+        msg_element.classList.add('alert-primary');
+        //msg_element.classList.add(level);
 
         if (dismissable) {
             msg_element.addEventListener('click', ()=>{
