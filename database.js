@@ -1,7 +1,7 @@
 class Database {
     constructor() {
         this.on_login = [];
-        this.gun = Gun(['http://bachelay.eu:8765/gun',"http://localhost:8765/gun"]);
+        this.gun = Gun();   //['http://bachelay.eu:8765/gun',"http://localhost:8765/gun"]
     }
 
     init() {
@@ -19,8 +19,11 @@ class Database {
             msg.addMessage('Logged in as ' + user.alias + ' ' + user.pub.slice(0, 5), 'info');
         });
 
-        let login_link = document.querySelector('nav .login');
+        let login_link = document.getElementById('login-link');
         login_link.textContent = "Logout"
+
+        let login_wrapper = document.getElementById("login-wrapper");
+        login_wrapper.hidden = true
 
         // logout
         login_link.addEventListener('click', (e) => {
