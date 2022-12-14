@@ -9,7 +9,6 @@ let gameId = getUrlVars()["p"]
 function load(){
     db.gun.get("gamelist").get(gameId).on(game=>{
         
-
         if(!checker){
             let game_checker = JSON.parse(game.checker)
             checker = Checker.Recreate(game_checker);
@@ -22,7 +21,6 @@ function load(){
                 let game_checker = JSON.parse(game.checker)
                 checker = Checker.Recreate(game_checker);
             }
-            
         }
 
     });
