@@ -21,42 +21,50 @@ class Conversation {
     }
 
     buildBasics() {
-        // <article id="cnv-{{id}}">
-        //     <h3>{{alias}} {{pub[:5]}}</h3>
-        //     <div class="conversation">
-        //         <p class="mine">Message by me</p>
-        //         <p class="their">Message by Him</p>
-        //     </div>
-        //     <form>
-        //         <input type="text" name="message"/>
-        //         <input type="submit" value="Send"/>
-        //     </form>
-        // </article>
+
         let article = document.createElement('article');
+        article.classList.add("card");
+        article.classList.add("col-4");
+        article.classList.add("m-1");
         article.id = 'cnv-'+this.id;
 
+        let bodycard = document.createElement("div");
+        bodycard.classList.add("card-body");
+
         let h3 = document.createElement('h3');
+        h3.classList.add("card-title");
         this.with.once((u) => {
             h3.textContent = u.alias + ' ' + u.pub.slice(0, 5);
         });
-        article.appendChild(h3);
+        bodycard.appendChild(h3);
+
+        article.appendChild(bodycard);
 
         let div = document.createElement('div');
         div.classList.add('conversation');
         article.appendChild(div);
         this.message_list = div;
 
+        let form_wrapper = document.createElement("div");
+        form_wrapper.classList.add("input-group");
+
         let form = document.createElement('form');
+        form.classList.add("m-1");
 
         let msg_input = document.createElement('input');
+        msg_input.classList.add("form-control");
         msg_input.type = 'text';
         msg_input.name = 'message';
-        form.appendChild(msg_input);
+        form_wrapper.appendChild(msg_input);
 
         let submit_btn = document.createElement('input');
+        submit_btn.classList.add("btn");
+        submit_btn.classList.add("btn-primary");
         submit_btn.type = 'submit';
         submit_btn.value = 'Send';
-        form.appendChild(submit_btn);
+        form_wrapper.appendChild(submit_btn);
+
+        form.appendChild(form_wrapper);
 
         form.addEventListener('submit', (e) => this.onFormSubmit(e));
 
