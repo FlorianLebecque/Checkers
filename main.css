@@ -1,109 +1,12 @@
-.hidden {
-    display: none !important;
-}
 
-body {
-    margin: 0;
-    font-family: sans-serif;
-}
 
-header {
-    margin-bottom: 1em;
-
-}
-
-nav {
-    display: grid;
-    grid-template-columns: minmax(auto, min-content) auto minmax(auto, min-content);
-    grid-template-areas: 'title gap login';
-    background: #0af;
-    margin-bottom: 1em;
-}
-nav a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: .5em;
-    color: white;
-    text-decoration: none;
-}
-nav .title {
-    grid-area: title;
-    font-size: 2em;
-    font-weight: bolder;
-}
-nav .login {
-    grid-area: login;
-}
-
-main {
-    max-width: 60em;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#login-form {
-    display: grid;
-    grid-template-columns: minmax(auto, min-content) auto;
-    grid-gap: .5em;
-}
-#login-form .form__submit {
-    grid-column: 2/-1
-}
-
-#messages {
-    margin: auto;
-    max-width: max-content;
-}
-.message {
-    border: 2px solid;
-    border-radius: 5px;
-    padding: .5rem;
-}
-.message.error {
-    background: #fcc;
-    border-color: #f00;
-}
-.message.warning {
-    background: #fda;
-    border-color: #f90;
-}
-.message.info {
-    background: #ccf;
-    border-color: #00f;
-}
-.message.success {
-    background: #cfc;
-    border-color: #0f0;
-}
-
-#conversations {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-}
-#conversations h2 {
-    width: 100%;
-    flex-shrink: 0;
-}
-#conversations article {
-    max-width: min-content;
-    padding: .5rem;
-    background-color: #ddd;
-    border-radius:.5rem;
-}
-#conversations form {
-    width: max-content;
-}
-#conversations h3 {
-    margin: 0;
-}
 .conversation {
     max-height: 10rem;
     overflow-y: scroll;
     display: grid;
+    width: 100%;
+    
     grid-template-columns: minmax(2rem,1fr) auto 2rem;
-    background-color: #eee;
 }
 .conversation p {
     margin: .25rem;
@@ -119,6 +22,7 @@ main {
     grid-column: -3/-1;
     border-end-end-radius: 0;
     background: #0af;
+    color: #fff;
 }
 
 #gameArea {
